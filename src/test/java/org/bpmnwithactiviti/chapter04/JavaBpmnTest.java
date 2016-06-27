@@ -95,4 +95,28 @@ public class JavaBpmnTest {
 		jobExecutor.shutdown();
 	}
 	
+	@Test
+	@Deployment(resources={"chapter04/bookorder.java.field.bpmn20.xml"})
+	public void executeJavaServiceWithExtensions() {
+		ProcessInstance processInstance = startProcessInstance();
+		RuntimeService runtimeService = activitiRule.getRuntimeService();
+		Date validatetime = (Date) runtimeService.getVariable(processInstance.getId(), "validatetime");
+		assertNotNull(validatetime);
+		System.out.println("validatetime is " + validatetime);
+	}
+	
+	@Test
+	@Deployment(resources = {"chapter04/bookorder.java.expression.bpmn20.xml"})
+	public void executeJavaExpression(){
+		RuntimeService runtimeService = activitiRule.getRuntimeService();
+		BookOrder bookOrder = new BookOrder();
+		Map<String, Object> variableMap = new HashMap<String, Object>();
+		variableMap.put("isbn", 123456L);
+		variableMap.put("bookOrder", bookOrder);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("bookorder", variableMap);
+		Date validatetime = (Date) runtimeService.getVariable(processInstance.getId(), "validatetime");
+		assertNotNull(validatetime);
+		System.out.println("validatetime is " + validatetime);
+	}
+	
 }
