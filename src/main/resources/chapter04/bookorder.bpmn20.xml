@@ -6,9 +6,7 @@
 	<process id="bookorder" name="bookorder">
 		<startEvent id="startevent1" name="Start"/>
 		<scriptTask id="scripttask1" name="Validate order" scriptFormat="groovy">
-			<script>
-				out:println "validating order for isbn " + isbn + "\n";
-			</script>
+			<script>out:println "validating order for isbn " + isbn + "\n";</script>
 		</scriptTask>
 		<sequenceFlow id="sequenceflow1" name="Validate order" sourceRef="startevent1" targetRef="scripttask1"/>
 		<userTask id="usertask1" name="Complete order" activiti:candidateGroups="sales">
